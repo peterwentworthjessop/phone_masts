@@ -1,5 +1,6 @@
 import csv
 import sys
+import time
 
 ## This class will implement the functionality required in the phone mast test.
 ## I will use the Python csv module to read the file into a list, mast_list.
@@ -64,6 +65,7 @@ class Masts:
         tenants = {}
         for row in self.mast_list:
             tenant = row[TENANT_NAME]
+            ## Set to 1 in the first instance, or increment
             if tenant in tenants:
                 tenants[tenant] += 1
             else:
@@ -73,3 +75,25 @@ class Masts:
         for key in keys:
             print('Tenant %s has %d masts' % (key, tenants[key]))
         return tenants
+        
+    def requirement_4(self):
+        '''Produce a list of data for a time period'''
+        ## Get time limits as seconds
+        lower_limit = time.mktime(time.strptime('01 Jun 1999', "%d %b %Y"))
+        upper_limit = time.mktime(time.strptime('31 Aug 2007', "%d %b %Y"))
+        ##
+        restricted_list = []
+        for row in self.mast_list:
+            start = time.strptime(row[LEASE_START_DATE], "%d %b %Y")
+            end = time.strptime(row[LEASE_END_DATE], "%d %b %Y")
+            start_secs = time.mktime(start)
+            ## check for start date within limits
+            if start_secs >= lower_limit and start_secs <= upper_limit:
+                ## format dates as DD/MM/YYYY
+                formatted_row = row
+                formatted_row[LEASE_START_DATE] = time.strftime('%d/%m/%Y', start)
+                formatted_row[LEASE_END_DATE] = time.strftime('%d/%m/%Y', end)
+                restricted_list.append(formatted_row)
+        for row in restricted_list:
+            print(row)
+        return restricted_list
