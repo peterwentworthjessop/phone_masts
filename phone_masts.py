@@ -8,6 +8,21 @@ import sys
 ## in the objective to mean that misspelt tenant names shall be treated
 ## as distinct, individual names.
 ## The first line is a header, and is discarded.
+##
+## Constants to index the row
+##
+PROPERTY_NAME = 0
+ADDRESS_1 = 1
+ADDRESS_2 = 2
+ADDRESS_3 = 3
+ADDRESS_4 = 4
+UNIT_NAME = 5
+TENANT_NAME = 6
+LEASE_START_DATE = 7
+LEASE_END_DATE = 8
+LEASE_YEARS = 9
+CURRENT_RENT = 10
+
 class Masts:
     def __init__(self):
         self.mast_list = []
@@ -24,7 +39,7 @@ class Masts:
         '''Produce a list sorted by current rent'''
         ## Apply a list comprehension to the whole list,
         ## copying the current rent field to the start of the row as a number.
-        temp_list = [[float(row[10])]+row for row in self.mast_list]
+        temp_list = [[float(row[CURRENT_RENT])]+row for row in self.mast_list]
         ## sort this temporary list
         temp_list.sort()
         ## Now remove the copied field form the start of each row.
@@ -35,10 +50,26 @@ class Masts:
         return ordered_list
         
     def requirement_2(self):
-        years_25_list = [row for row in self.mast_list if row[9] == '25']
+        '''Produce a list where the lease years are 25'''
+        years_25_list = [row for row in self.mast_list if row[LEASE_YEARS] == '25']
         total_rent = 0.0
         for row in years_25_list:
             print(row)
-            total_rent += float(row[10])
+            total_rent += float(row[CURRENT_RENT])
         print(total_rent)
         return(years_25_list, total_rent)
+        
+    def requirement_3(self):
+        '''Produce a dictionary of tenants'''
+        tenants = {}
+        for row in self.mast_list:
+            tenant = row[TENANT_NAME]
+            if tenant in tenants:
+                tenants[tenant] += 1
+            else:
+                tenants[tenant] = 1
+        keys = list(tenants.keys())
+        keys.sort()
+        for key in keys:
+            print('Tenant %s has %d masts' % (key, tenants[key]))
+        return tenants

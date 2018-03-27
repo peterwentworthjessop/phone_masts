@@ -40,6 +40,13 @@ class TestPhoneMasts(unittest.TestCase):
          46500.0)
         years_25_list, rent =  self.masts.requirement_2()
         self.assertEqual((years_25_list, rent), expected)
+        
+        
+    def test_requirement_3(self):
+        '''Test third requirement'''
+        dic = self.masts.requirement_3()
+        self.assertEqual(
+        dic['Cornerstone Telecommunications Infrastructure'], 16)
 
 if __name__ == '__main__':
     unittest.main()
