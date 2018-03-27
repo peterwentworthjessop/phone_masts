@@ -24,6 +24,39 @@ LEASE_END_DATE = 8
 LEASE_YEARS = 9
 CURRENT_RENT = 10
 
+## It would have been good to use a GUI or Web framework
+## to provide a front end for this program,
+## but I am keeping it simple by providing a command-line menu.
+
+def main():
+    ## If the file path is not provided as the first argument
+    ## read in the default file.
+    masts = Masts()
+    if len(sys.argv) > 1:
+        masts.read_in(sys.argv[1])
+    else:
+        masts.read_in()
+    ## A menu to run each requirement
+    ##
+    menu ='\nMenu\n----\n\n'+\
+    '1 - first requirement\n2 - second requirement\n3 - third requirement\n'+\
+        '4 - fourth requirement\n5 - exit.\n'
+    answer = '1'
+    while answer != 5:
+        print(menu)
+        answer = input('Enter a number 1-5: ').strip()
+        if answer == '1':
+            result = masts.requirement_1()
+        elif answer == '2':
+            result = masts.requirement_2()
+        elif answer == '3':
+            result = masts.requirement_3()
+        elif answer == '4':
+            result = masts.requirement_4()
+        else:
+            answer = '5'
+            break
+
 class Masts:
     def __init__(self):
         self.mast_list = []
@@ -97,3 +130,6 @@ class Masts:
         for row in restricted_list:
             print(row)
         return restricted_list
+        
+if __name__ == '__main__':
+    main()
