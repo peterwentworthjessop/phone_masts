@@ -11,7 +11,6 @@ import sys
 class Masts:
     def __init__(self):
         self.mast_list = []
-        self.ordered_list = []
 
     def read_in(self, file_name='c:\\phone_mast_data\\Mobile Phone Masts.csv'):
         '''Read a file into the mast list, removing the header'''
@@ -20,6 +19,7 @@ class Masts:
         self.mast_list = list(reader)[1:]
         f.close()
         
+    ## Requirement methods will return the data produced for the requirement.
     def requirement_1(self):
         '''Produce a list sorted by current rent'''
         ## Apply a list comprehension to the whole list,
@@ -28,8 +28,17 @@ class Masts:
         ## sort this temporary list
         temp_list.sort()
         ## Now remove the copied field form the start of each row.
-        self.ordered_list = [row[1:] for row in temp_list]
+        ordered_list = [row[1:] for row in temp_list]
         ## Print the first 5 rows to the console
-        for row in self.ordered_list[0:5]:
+        for row in ordered_list[0:5]:
             print(row)
-
+        return ordered_list
+        
+    def requirement_2(self):
+        years_25_list = [row for row in self.mast_list if row[9] == '25']
+        total_rent = 0.0
+        for row in years_25_list:
+            print(row)
+            total_rent += float(row[10])
+        print(total_rent)
+        return(years_25_list, total_rent)

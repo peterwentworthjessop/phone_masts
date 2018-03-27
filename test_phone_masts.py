@@ -27,9 +27,19 @@ class TestPhoneMasts(unittest.TestCase):
          ['Seacroft Gate (Chase) - Block 2', 'Telecomms Apparatus', 'Leeds', '', 'LS14', 'Seacroft Gate (Chase) block 2-Telecom App.', 'Vodafone Ltd.', '30 Jan 2004', '29 Jan 2029', '25', '12250.00'],
          ['Cottingley Towers', 'Leeds', '', '', 'LS11', 'Cottingley Towers-WYK0052', 'Everything Everywhere Ltd', '28 Jan 2008', '27 Jan 2018', '10', '12750.00']
         ]
-        self.masts.requirement_1()
-        self.assertEqual(self.masts.ordered_list[0:5], expected)
-
+        ordered_list = self.masts.requirement_1()
+        self.assertEqual(ordered_list[0:5], expected)
+        
+    def test_requirement_2(self):
+        '''Test second requirement'''
+        expected = ([         ['Seacroft Gate (Chase) - Block 2', 'Telecomms Apparatus', 'Leeds', '', 'LS14', 'Seacroft Gate (Chase) block 2-Telecom App.', 'Vodafone Ltd.', '30 Jan 2004', '29 Jan 2029', '25', '12250.00'],
+         ['Queenswood Heights', 'Queenswood Heights', 'Queenswood Gardens', 'Headingley', 'Leeds', 'Queenswood Hgt-Telecom App.', 'Vodafone Ltd', '08 Nov 2004', '07 Nov 2029', '25', '9500.00'],
+         ['Armley - Burnsall Grange', 'Armley', 'LS13', '', '', 'Burnsall Grange CSR 37865', 'O2 (UK) Ltd', '26 Jul 2007', '25 Jul 2032', '25', '12000.00'],
+         ['Seacroft Gate (Chase) - Block 2', 'Telecomms Apparatus', 'Leeds', '', 'LS14', 'Seacroft Gate (Chase) - Block 2, WYK 0414', 'Hutchinson3G Uk Ltd&Everything Everywhere Ltd', '21 Aug 2007', '20 Aug 2032', '25', '12750.00']
+         ],
+         46500.0)
+        years_25_list, rent =  self.masts.requirement_2()
+        self.assertEqual((years_25_list, rent), expected)
 
 if __name__ == '__main__':
     unittest.main()
